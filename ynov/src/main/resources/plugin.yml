@@ -1,0 +1,4 @@
+name: Plugin
+version: ${project.version}
+main: com.ynov.projet.Plugin
+api-version: 1.13
