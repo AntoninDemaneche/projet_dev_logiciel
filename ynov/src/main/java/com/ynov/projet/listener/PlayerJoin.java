@@ -23,8 +23,8 @@ public class PlayerJoin implements Listener {
         ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
         if (skullMeta != null){
-            skullMeta.setOwningPlayer(pInfo.getPlayer());
-            skullMeta.setDisplayName("§fProfil de " + pInfo.getPlayer().getDisplayName());
+            skullMeta.setOwningPlayer(e.getPlayer());
+            skullMeta.setDisplayName("§4Profil de " + e.getPlayer().getDisplayName());
             skull.setItemMeta(skullMeta);
         }
 

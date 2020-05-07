@@ -26,11 +26,8 @@ public class ProfilInventory {
         ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
         if (skullMeta != null){
-            skullMeta.setOwningPlayer(pInfo.getPlayer());
-            skullMeta.setDisplayName("§fProfil de " + pInfo.getPlayer().getDisplayName());
-            ArrayList<String> lore = new ArrayList<>(Arrays.asList("§7Voici le mana de: §f" + pInfo.getMana()));
-            lore.add("§7Mana maximum: §f" + pInfo.getMaxMana());
-            skullMeta.setLore(lore);
+            skullMeta.setOwningPlayer(p.getPlayer());
+            skullMeta.setDisplayName("§fProfil de " + p.getDisplayName());
             skull.setItemMeta(skullMeta);
         }
         inv.setItem(13, skull);
