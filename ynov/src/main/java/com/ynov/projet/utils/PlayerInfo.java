@@ -87,4 +87,8 @@ public class PlayerInfo {
         mana = 100;
         maxMana = 100;
     }
+
+    public void destroy(){
+        instanceList.remove(this);
+    }
 }

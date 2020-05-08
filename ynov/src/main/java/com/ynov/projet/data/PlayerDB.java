@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.security.PublicKey;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,6 +52,10 @@ public class PlayerDB {
             try{
                 PreparedStatement pst = data.getConnection().prepareStatement("UPDATE PlayerInfo SET mana = ? WHERE uuid = ?");
                 pst.setInt(1, pInfo.getMana());
+                pst.setString(2, uuid);
+
+                pst.executeUpdate();
+                pst.close();
             }catch (SQLException e){
                 e.printStackTrace();
             }
@@ -88,6 +92,8 @@ public class PlayerDB {
                     int mana = set.getInt("mana");
 
                     PlayerInfo pInfo = new PlayerInfo(p, mana);
+
+                    pInfo.addMana(100);
 
                     Plugin.getLoadingList().remove(p.getName());
                     p.sendMessage(ChatColor.DARK_GRAY + "Vos données ont été chargées correctement ! \n"
