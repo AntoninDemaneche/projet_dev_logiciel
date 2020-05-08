@@ -24,17 +24,20 @@ public class PlayerInfo {
     @Getter
     public static ArrayList<PlayerInfo> instanceList = new ArrayList<>();
 
-    public PlayerInfo(Player p, int mana, int maxMana){
+    public PlayerInfo(Player p, int mana){
         this.player = p;
         this.uuid = p.getUniqueId().toString();
         this.mana = mana;
-        this.maxMana = maxMana;
+        this.maxMana = 500;
+
+        p.setExp(0);
+        p.setLevel(mana);
     }
 
-    public PlayerInfo(String uuid, int mana, int maxMana){
+    public PlayerInfo(String uuid, int mana){
         this.uuid = uuid;
         this.mana = mana;
-        this.maxMana = maxMana;
+        this.maxMana = 500;
     }
 
     public void addMana(int amount){
