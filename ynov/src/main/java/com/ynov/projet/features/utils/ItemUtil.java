@@ -1,4 +1,4 @@
-package com.ynov.projet.utils;
+package com.ynov.projet.features.utils;
 
 import net.minecraft.server.v1_15_R1.NBTTagCompound;
 import org.bukkit.DyeColor;

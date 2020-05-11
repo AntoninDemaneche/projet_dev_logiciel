@@ -1,6 +1,6 @@
-package com.ynov.projet.data;
+package com.ynov.projet.features.data;
 
-import com.ynov.projet.Plugin;
+import com.ynov.projet.Main;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 
@@ -12,24 +12,22 @@ public class DBManager {
     private static Config cfg = new Config("database.yml");
     private static int dataId = -1;
     private Connection connection;
-    private Plugin plugin;
+    private Main main;
 
     @Getter
     PlayerDB playerDB;
 
-    public DBManager(Plugin plugin){
-        this.plugin = plugin;
+    public DBManager(Main main){
+        this.main = main;
         this.playerDB = new PlayerDB(this);
     }
 
-    public Connection getConnection(){
-        if (isConnected()){
-            return this.connection;
-        }else {
+    public Connection getConnection() {
+        if (!isConnected()) {
             disconnect();
             connect();
-            return this.connection;
         }
+        return this.connection;
     }
 
     public void connect(){
@@ -43,13 +41,13 @@ public class DBManager {
 
             this.connection = DriverManager.getConnection(sqlhost, user, password);
         } catch (SQLException e) {
-            System.out.println("[SeisanPlugin] Une erreur de connection à la base de données est survenue.");
+            System.out.println("[Plugin] Une erreur de connection à la base de données est survenue.");
             Bukkit.getServer().shutdown();
             e.printStackTrace();
         }
 
         if(dataId == -1) {
-            dataId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+            dataId = Bukkit.getScheduler().scheduleSyncRepeatingTask(main, new Runnable() {
                 @Override
                 public void run() {
                     refreshConnection();
@@ -68,14 +66,12 @@ public class DBManager {
     }
 
     public void refreshConnection(){
-        System.out.println("[SeisanPlugin] Refresh de la connection à la base de données.");
+        System.out.println("[Plugin] Refresh de la connection à la base de données.");
         try {
             if (isConnected()) {
                 disconnect();
-                connect();
-            } else {
-                connect();
             }
+            connect();
         } catch (Exception e) {
             e.printStackTrace();
             Bukkit.getServer().shutdown();
@@ -93,5 +89,4 @@ public class DBManager {
             }
         }
     }
-
 }

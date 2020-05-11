@@ -1,19 +1,16 @@
-package com.ynov.projet.listener;
+package com.ynov.projet.features.listener;
 
-import com.ynov.projet.utils.PlayerInfo;
+import com.ynov.projet.features.Feature;
+import com.ynov.projet.features.PlayerData.PlayerInfo;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-public class PlayerJoin implements Listener {
+public class PlayerJoin extends Feature {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onJoin(PlayerJoinEvent e){
         e.setJoinMessage("");

@@ -1,6 +1,6 @@
-package com.ynov.projet.data;
+package com.ynov.projet.features.data;
 
-import com.ynov.projet.Plugin;
+import com.ynov.projet.Main;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -10,16 +10,14 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
-/**
- * Created by Helliot on 03/08/2017.
- */
+
 public class Config {
 
     private YamlConfiguration yamlFile;
     private File configFile;
 
     private static String spigotPath;
-    private static JavaPlugin spigot = Plugin.getInstance();
+    private static JavaPlugin spigot = Main.plugin();
 
     /**
      * Defines static values of the class

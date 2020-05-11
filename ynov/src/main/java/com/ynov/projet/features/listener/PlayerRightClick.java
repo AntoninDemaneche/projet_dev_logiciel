@@ -1,16 +1,15 @@
-package com.ynov.projet.listener;
+package com.ynov.projet.features.listener;
 
-import com.ynov.projet.inventory.ProfilInventory;
-import com.ynov.projet.utils.PlayerInfo;
+import com.ynov.projet.features.Feature;
+import com.ynov.projet.features.inventory.ProfilInventory;
+import com.ynov.projet.features.PlayerData.PlayerInfo;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
 
-public class PlayerRightClick implements Listener {
+public class PlayerRightClick extends Feature {
     @EventHandler
     public void playerClickOnHead(PlayerInteractEvent e){
         Player p = e.getPlayer();
