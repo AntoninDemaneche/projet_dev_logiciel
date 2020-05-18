@@ -1,4 +1,7 @@
 name: Plugin
 version: ${project.version}
 main: com.ynov.projet.Main
-api-version: 1.13
+api-version: 1.15
+commands:
+  lost:
+    description: Permet à un joueur de perdre du chakra.

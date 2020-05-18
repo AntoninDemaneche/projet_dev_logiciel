@@ -2,6 +2,8 @@ package com.ynov.projet;
 
 
 import com.ynov.projet.features.PlayerData.PlayerInfo;
+import com.ynov.projet.features.commands.anothers.Commands;
+import com.ynov.projet.features.commands.profil.ProfilRegister;
 import com.ynov.projet.features.listener.Listener;
 import lombok.Getter;
 import com.ynov.projet.features.data.DBManager;
@@ -91,10 +93,13 @@ public final class Main extends JavaPlugin {
         CURR_CONFIG_PATH = new ArrayList<>();
         CURR_CONFIG_PATH.add("features");
         configMap = new HashMap<>();
+        COMMANDS_ALLOW.add("lost");
     }
 
     private void registerFeatures(){
         new Listener().register();
+        new Commands().register();
+        new ProfilRegister().register();
         System.out.println("---> Enabling Plugin <---");
         serverOpen = true;
         spigotLogger = Bukkit.getLogger();

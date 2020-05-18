@@ -17,6 +17,7 @@ public class PlayerJoin extends Feature {
         Player p = e.getPlayer();
         PlayerInfo pInfo = PlayerInfo.getPlayerInfo(p);
 
+
         ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
         if (skullMeta != null){
@@ -25,11 +26,7 @@ public class PlayerJoin extends Feature {
             skull.setItemMeta(skullMeta);
         }
 
+
         e.getPlayer().getInventory().addItem(skull);
-
-        if (PlayerInfo.getPlayerInfo(e.getPlayer()) == null){
-
-        }
-
     }
 }

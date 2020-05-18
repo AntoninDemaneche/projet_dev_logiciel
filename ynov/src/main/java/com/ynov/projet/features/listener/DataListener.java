@@ -6,6 +6,7 @@ import com.ynov.projet.features.Feature;
 import com.ynov.projet.features.data.PlayerDB;
 import com.ynov.projet.features.PlayerData.PlayerInfo;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -36,10 +37,9 @@ public class DataListener extends Feature {
     @EventHandler
     public void onQuit(PlayerQuitEvent e){
         e.setQuitMessage("");
+        Player p = e.getPlayer();
 
-        if (Main.dbManager != null){
-
-        }
+        p.getInventory().clear();
 
         PlayerInfo pInfo = PlayerInfo.getPlayerInfo(e.getPlayer());
         DBManager dbManager = Main.dbManager;

@@ -18,8 +18,6 @@ public class PlayerRightClick extends Feature {
             if (e.getItem() != null && e.getItem().getType() == Material.PLAYER_HEAD){
                 if (e.getItem().getItemMeta().getDisplayName().equals("§4Profil de " + e.getPlayer().getDisplayName())){
                     p.openInventory(ProfilInventory.getProfileInventory(pInfo, p));
-                }else {
-                    p.sendMessage("test3");
                 }
             }
         }

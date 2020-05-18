@@ -58,7 +58,7 @@ public class PlayerDB {
 
         Bukkit.getScheduler().runTaskAsynchronously(Main.plugin(), () -> {
             try {
-                PreparedStatement pst = data.getConnection().prepareStatement("UPDATE PlayerInfo SET mana = ?, rank = ?, diconnectTime = ? WHERE uuid = ?");
+                PreparedStatement pst = data.getConnection().prepareStatement("UPDATE PlayerInfo SET mana = ?, rank = ?, disconnectTime = ? WHERE uuid = ?");
 
                 pst.setInt(1, pInfo.getMana());
                 pst.setInt(2, pInfo.getRank().getId());
@@ -117,7 +117,7 @@ public class PlayerDB {
 
                     Main.loadingList.remove(p.getName());
                     p.sendMessage(ChatColor.DARK_GRAY + "Vos données ont été chargées correctement ! \n"
-                            + ChatColor.GRAY + "Bienvenue sur " + ChatColor.RED + "Serveur dev " + p.getDisplayName() + ChatColor.GRAY + ",\n" +
+                            + ChatColor.GRAY + "Bienvenue sur " + ChatColor.RED + "Serveur " + p.getDisplayName() + ChatColor.GRAY + ",\n" +
                             ChatColor.GRAY + "Votre rang est: " + ChatColor.GOLD + rank.getDisplayName() + "\n");
                 }catch (Exception e){
                     e.printStackTrace();

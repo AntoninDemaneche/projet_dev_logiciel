@@ -2,6 +2,7 @@ package com.ynov.projet.features.PlayerData;
 
 import com.ynov.projet.features.objectnum.RPRank;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -16,6 +17,10 @@ public class PlayerInfo {
 
     @Getter
     String uuid;
+
+    @Getter
+    @Setter
+    private String id;
 
     @Getter
     private int mana;
@@ -41,8 +46,8 @@ public class PlayerInfo {
         if (!instanceList.containsKey(uuid)) instanceList.put(uuid, this);
     }
 
-    public PlayerInfo(String uuid, int mana, RPRank rank){
-        this.uuid = uuid;
+    public PlayerInfo(String id, int mana, RPRank rank){
+        this.id = id;
         this.mana = mana;
         this.rank = rank;
         this.maxMana = mana + rank.getManaRank();
@@ -65,7 +70,7 @@ public class PlayerInfo {
             mana = 0;
             for(Player p : Bukkit.getOnlinePlayers()){
                 if(p.isOp()){
-                    p.sendMessage(player.getDisplayName() + ChatColor.YELLOW + " est tombé à 0 de chakra.");
+                    p.sendMessage(player.getDisplayName() + ChatColor.YELLOW + " est tombé à 0 de mana.");
                 }
             }
         }else
@@ -85,6 +90,10 @@ public class PlayerInfo {
 
     public static PlayerInfo getPlayerInfo(Player p){
         return instanceList.get(p.getUniqueId().toString());
+    }
+
+    public static void replacePlayerInfo(Player p, PlayerInfo pInfo) {
+        instanceList.put(p.getUniqueId().toString(), pInfo);
     }
 
     public void setMaxMana(int amount){
@@ -110,6 +119,6 @@ public class PlayerInfo {
     }
 
     public void destroy(){
-        instanceList.remove(this);
+        instanceList.remove(this.uuid);
     }
 }
