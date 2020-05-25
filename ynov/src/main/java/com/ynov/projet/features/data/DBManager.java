@@ -9,16 +9,21 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBManager {
+
     private static Config cfg = new Config("database.yml");
     private static int dataId = -1;
     private Connection connection;
     private Main main;
 
     @Getter
+    PlayerConfigDB playerConfigDB;
+    @Getter
     PlayerDB playerDB;
 
     public DBManager(Main main){
         this.main = main;
+
+        this.playerConfigDB = new PlayerConfigDB(this);
         this.playerDB = new PlayerDB(this);
     }
 
@@ -66,7 +71,7 @@ public class DBManager {
     }
 
     public void refreshConnection(){
-        System.out.println("[Plugin] Refresh de la connection à la base de données.");
+        System.out.println("[Plugin] Refresh de la connexion à la base de données.");
         try {
             if (isConnected()) {
                 disconnect();

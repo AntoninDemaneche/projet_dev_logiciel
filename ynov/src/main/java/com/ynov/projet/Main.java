@@ -2,9 +2,11 @@ package com.ynov.projet;
 
 
 import com.ynov.projet.features.PlayerData.PlayerInfo;
+import com.ynov.projet.features.chat.ChatFormat;
 import com.ynov.projet.features.commands.anothers.Commands;
 import com.ynov.projet.features.commands.profil.ProfilRegister;
 import com.ynov.projet.features.listener.Listener;
+import com.ynov.projet.features.utils.Channel;
 import lombok.Getter;
 import com.ynov.projet.features.data.DBManager;
 import org.bukkit.Bukkit;
@@ -83,6 +85,7 @@ public final class Main extends JavaPlugin {
     public void onDisable() {
         LOG.info("---> Disabling plugin <---");
         serverOpen = false;
+        Channel.saveMJlist();
         Bukkit.getScheduler().cancelTasks(this);
     }
 
@@ -97,6 +100,8 @@ public final class Main extends JavaPlugin {
     }
 
     private void registerFeatures(){
+        new Channel().register();
+        new ChatFormat().register();
         new Listener().register();
         new Commands().register();
         new ProfilRegister().register();

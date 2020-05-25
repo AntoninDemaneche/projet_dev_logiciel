@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ProfilInventory {
     public static Inventory getProfileInventory(PlayerInfo pInfo, Player p){
-        Inventory inv = Bukkit.createInventory(p, 54, "§8Profil de : " + p.getDisplayName());
+        Inventory inv = Bukkit.createInventory(p, 54, "§8Profil");
         /* Bordure */
         for (int i = 0; i < 54; i++) {
             inv.setItem(i, ItemUtil.createItemStack(Material.GRAY_STAINED_GLASS_PANE, 1, "§8-"));

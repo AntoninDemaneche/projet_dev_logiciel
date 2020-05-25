@@ -24,12 +24,13 @@ public class PlayerDB {
 
     public void insertPlayer(String uuid){
         try{
-            PreparedStatement pst = data.getConnection().prepareStatement("INSERT INTO PlayerInfo(uuid, mana, rank, disconnectTime) VALUES(?,?,?,?)");
+            PreparedStatement pst = data.getConnection().prepareStatement("INSERT INTO PlayerInfo(uuid, mana, rank, age, disconnectTime) VALUES(?,?,?,?,?)");
 
             pst.setString(1, uuid); //UUID
             pst.setInt(2, 100); //Mana
             pst.setInt(3, 0);//Rank
-            pst.setInt(4, 0);//DisconnectTime
+            pst.setInt(4, 0);//Age
+            pst.setInt(5, 0);//DisconnectTime
             pst.executeUpdate();
             pst.close();
         }catch (SQLException e){
@@ -58,12 +59,13 @@ public class PlayerDB {
 
         Bukkit.getScheduler().runTaskAsynchronously(Main.plugin(), () -> {
             try {
-                PreparedStatement pst = data.getConnection().prepareStatement("UPDATE PlayerInfo SET mana = ?, rank = ?, disconnectTime = ? WHERE uuid = ?");
+                PreparedStatement pst = data.getConnection().prepareStatement("UPDATE PlayerInfo SET mana = ?, rank = ?, age = ?, disconnectTime = ? WHERE uuid = ?");
 
                 pst.setInt(1, pInfo.getMana());
                 pst.setInt(2, pInfo.getRank().getId());
-                pst.setLong(3, System.currentTimeMillis());
-                pst.setString(4, uuid);
+                pst.setInt(3, pInfo.getAge());
+                pst.setLong(4, System.currentTimeMillis());
+                pst.setString(5, uuid);
 
                 pst.executeUpdate();
                 pst.close();
@@ -104,7 +106,8 @@ public class PlayerDB {
 
                     int mana = set.getInt("mana");
                     RPRank rank = RPRank.getById(set.getInt("rank"));
-                    PlayerInfo pInfo = new PlayerInfo(p, mana, rank);
+                    int age = set.getInt("age");
+                    PlayerInfo pInfo = new PlayerInfo(p, mana, rank, age);
 
                     long disconnectTime = set.getLong("disconnectTime");
                     long timeDisconnected = System.currentTimeMillis() - disconnectTime;
@@ -136,7 +139,8 @@ public class PlayerDB {
     private PlayerInfo loadPlayerInfo(String name, ResultSet set) throws SQLException{
         int mana = set.getInt("mana");
         RPRank rank = RPRank.getById(set.getInt("rank"));
-        return new PlayerInfo(name, mana, rank);
+        int age = set.getInt("age");
+        return new PlayerInfo(name, mana, rank, age);
     }
 
     public static double round(double value, int places) {

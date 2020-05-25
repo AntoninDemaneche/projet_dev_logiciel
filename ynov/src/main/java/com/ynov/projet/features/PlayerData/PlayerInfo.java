@@ -32,25 +32,31 @@ public class PlayerInfo {
     private RPRank rank;
 
     @Getter
+    @Setter
+    int age;
+
+    @Getter
     public static HashMap<String, PlayerInfo> instanceList = new HashMap<>();
 
-    public PlayerInfo(Player p, int mana, RPRank rank){
+    public PlayerInfo(Player p, int mana, RPRank rank, int age){
         this.player = p;
         this.uuid = p.getUniqueId().toString();
         this.rank = rank;
         this.mana = mana;
-        this.maxMana = mana + rank.getManaRank();
+        this.age = age;
+        this.maxMana = 100 + rank.getManaRank();
 
         p.setExp(0);
         p.setLevel(mana);
         if (!instanceList.containsKey(uuid)) instanceList.put(uuid, this);
     }
 
-    public PlayerInfo(String id, int mana, RPRank rank){
+    public PlayerInfo(String id, int mana, RPRank rank, int age){
         this.id = id;
         this.mana = mana;
         this.rank = rank;
-        this.maxMana = mana + rank.getManaRank();
+        this.age = age;
+        this.maxMana = 100 + rank.getManaRank();
     }
 
     public void addMana(int amount){

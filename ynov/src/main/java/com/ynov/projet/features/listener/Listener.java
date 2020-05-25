@@ -56,6 +56,7 @@ public class Listener extends Feature {
         new DataListener().register();
         new PlayerJoin().register();
         new PlayerRightClick().register();
+        new ProfilInventoryListener().register();
 
         antimaccro = new HashMap<>();
         loccasino = new HashMap<>();

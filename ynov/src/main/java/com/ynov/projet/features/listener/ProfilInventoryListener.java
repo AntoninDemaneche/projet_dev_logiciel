@@ -9,7 +9,7 @@ public class ProfilInventoryListener extends Feature {
     @EventHandler
     public void onInvClick(InventoryClickEvent e){
         Player p = (Player) e.getWhoClicked();
-        if (e.getView().getTitle().equals("§8Profil de : " + p.getDisplayName())){
+        if (e.getView().getTitle().equals("§8Profil")){
             int slot = e.getSlot();
             e.setCancelled(true);
         }
