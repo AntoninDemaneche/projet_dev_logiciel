@@ -29,6 +29,7 @@ public enum  RPRank {
     @Getter
     public int manaRank;
 
+
     public static RPRank getById(int id){
         for (RPRank rank : values()){
             if (rank.getId() == id){
