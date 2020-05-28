@@ -2,7 +2,7 @@ package com.ynov.projet;
 
 
 
-import com.ynov.projet.Features.Chat.ChatFormat;
+import com.ynov.projet.Features.chat.ChatFormat;
 import com.ynov.projet.Features.ability.Ability;
 import com.ynov.projet.Features.ability.AbilityLoader;
 import com.ynov.projet.Features.commands.anothers.Commands;

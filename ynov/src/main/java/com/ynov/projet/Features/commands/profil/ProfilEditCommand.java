@@ -1,0 +1,240 @@
+package com.ynov.projet.Features.commands.profil;
+
+import com.ynov.projet.Features.PlayerData.PlayerInfo;
+import com.ynov.projet.Features.objectnum.Clan;
+import com.ynov.projet.Features.objectnum.ClanAttribut;
+import com.ynov.projet.Features.objectnum.StyleCombat;
+import com.ynov.projet.Features.objectnum.VoieNinja;
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import com.ynov.projet.Main.Command;
+
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProfilEditCommand extends Command {
+    @Override
+    public void myOnCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] split) {
+        if(sender.isOp()){
+            if(split.length == 2 && split[0].equals("reset")) {
+                Player target = sender.getServer().getPlayer(split[1]);
+                if (target != null) {
+                    PlayerInfo tInfo = PlayerInfo.getPlayerInfo(target);
+                    tInfo.reset();
+                    sender.sendMessage("§cHRP : §7La fiche personnage de "+ target.getDisplayName()+" a été réinitialisée.");
+                }
+            }
+            else {
+                if (split.length > 1) {
+                    modify((Player) sender, split);
+                } else {
+                    sendHelpList(sender);
+                }
+            }
+        } else {
+            sender.sendMessage(ChatColor.RED + "Vous n'avez pas la permission !");
+        }
+    }
+
+    @Override
+    protected List<String> myOnTabComplete(CommandSender sender, org.bukkit.command.Command command, String label, String[] split)
+    {
+        List<String> completion = new ArrayList();
+        switch(split.length) {
+            case 1:
+                complete(completion, "style", split[0]);
+                complete(completion, "voie", split[0]);
+                complete(completion, "clan", split[0]);
+                complete(completion, "encre", split[0]);
+                complete(completion, "reset", split[0]);
+                break;
+            case 2:
+                if(split[0].equals("style") || split[0].equals("voie") || split[0].equals("clan")) {
+                    complete(completion, "list", split[1]);
+                    complete(completion, "set", split[1]);
+                }
+                break;
+            case 3:
+                if(split[0].equals("style") || split[0].equals("voie") || split[0].equals("clan")) {
+                    if(split[1].equals("set")) {
+                        for(Player p : Bukkit.getOnlinePlayers()) {
+                            complete(completion,p.getName(), split[2]);
+                        }
+                    }
+                }
+                break;
+            case 4:
+                if(split[1].equals("set")) {
+                    if (split[0].equals("style")) {
+                        for (StyleCombat styleCombat : StyleCombat.values()) {
+                            complete(completion, styleCombat.getIdentifiant(), split[3]);
+                        }
+                    }
+                    else if(split[0].equals("voie")) {
+                        for (VoieNinja voieNinja : VoieNinja.values()) {
+                            complete(completion, voieNinja.getIdentifiant(), split[3]);
+                        }
+                    }
+                    else if(split[0].equals("clan")) {
+                        for (Clan clan : Clan.values()) {
+                            complete(completion, clan.getIdentifiant(), split[3]);
+                        }
+                    }
+                }
+        }
+        return completion;
+    }
+
+
+    private void modify(Player sender, String[] args) {
+        switch (args[1]) {
+            case "set":
+                if (args.length == 4) {
+                    Player target = sender.getServer().getPlayer(args[2]);
+                    if (target != null) {
+                        PlayerInfo tInfo = PlayerInfo.getPlayerInfo(target);
+                        switch (args[0]) {
+                            case "clan":
+                                Clan clan = Clan.getFromIdentifiant(args[3]);
+                                tInfo.setClan(clan);
+                                sender.sendMessage(ChatColor.GREEN + "Le clan de " + target.getDisplayName() + ChatColor.GREEN + " est désormais " + ChatColor.GOLD + clan.getName());
+                                break;
+                            case "style":
+                                StyleCombat styleCombat = StyleCombat.getFromIdentifiant(args[3]);
+                                tInfo.setStyleCombat(styleCombat);
+                                sender.sendMessage(ChatColor.GREEN + "Le style de combat de " + target.getDisplayName() + ChatColor.GREEN + " est désormais " + ChatColor.GOLD + styleCombat.getName());
+                                break;
+                            case "voie":
+                                VoieNinja voieNinja = VoieNinja.getFromIdentifiant(args[3]);
+                                tInfo.setVoieNinja(voieNinja);
+                                sender.sendMessage(ChatColor.GREEN + "La voie ninja de " + target.getDisplayName() + ChatColor.GREEN + " est désormais " + ChatColor.GOLD + voieNinja.getName());
+                                break;
+                            case "attribut":
+                                // profiledit clan set Veziah (nom)
+                                if(tInfo.getClan().getName().equals("Inuzuka")) {
+                                    tInfo.setAttributClan(args[3]);
+                                    sender.sendMessage(ChatColor.GREEN + "L'attribut de clan de " + target.getDisplayName() + ChatColor.GREEN + " est désormais " + ChatColor.GOLD + args[3]);
+                                }
+                                else {
+                                    sender.sendMessage("§cHRP : §7Ce joueur n'est pas du clan Inuzuka.");
+                                }
+                                if(tInfo.getClan().getName().equals("Sabaku")) {
+                                    if(StringUtils.isNumeric(args[3])) {
+                                        int i = Integer.parseInt(args[3]);
+                                        if(i < 5 && i > 0) {
+                                            ClanAttribut clanAttribut = ClanAttribut.getFromID(i);
+                                            if(clanAttribut != null) {
+                                                tInfo.setAttributClan(clanAttribut.getName());
+                                                sender.sendMessage("§cHRP : §7Le Sabaku a désormais le type de sable suivant : "+clanAttribut.getName());
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        sendHelpList(sender);
+                                    }
+                                }
+                                break;
+                            case "encre":
+                                // nb d'encre
+                                int ink = Integer.parseInt(args[3]);
+                                tInfo.setInk(ink);
+                                sender.sendMessage("§cHRP : "+tInfo.getPlayer().getDisplayName() + "§7 a désormais " + ink+" doses d'encre.");
+                                break;
+                            default:
+                                sendHelpList(sender);
+                        }
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "Le joueur n'est pas connecté !");
+                    }
+                } else {
+                    sendList(args[0], sender);
+                }
+                break;
+            case "list":
+                if (args.length == 2) {
+                    sendList(args[0], sender);
+                } else {
+                    sendHelpList(sender);
+                }
+                break;
+            case "see":
+                if (args.length == 3) {
+                    Player target = sender.getServer().getPlayer(args[2]);
+                    if (target != null) {
+                        PlayerInfo tInfo = PlayerInfo.getPlayerInfo(target);
+                        switch (args[0]) {
+                            case "clan":
+                                sender.sendMessage(ChatColor.GRAY + "Le clan de " + target.getDisplayName() + ChatColor.GRAY + " est " + ChatColor.GOLD + tInfo.getClan().getName());
+                                break;
+                            case "style":
+                                sender.sendMessage(ChatColor.GRAY + "Le style de combat de " + target.getDisplayName() + ChatColor.GRAY + " est " + ChatColor.GOLD + tInfo.getStyleCombat());
+                                break;
+                            case "voie":
+                                sender.sendMessage(ChatColor.GRAY + "La voie ninja de " + target.getDisplayName() + ChatColor.GRAY + " est " + ChatColor.GOLD + tInfo.getVoieNinja().getName());
+                                break;
+                            default:
+                                sendHelpList(sender);
+                        }
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "Le joueur n'est pas connecté !");
+                    }
+                } else {
+                    sendHelpList(sender);
+                }
+                break;
+            default:
+                sendHelpList(sender);
+        }
+    }
+    private void sendHelpList(CommandSender sender){
+        if(sender.isOp()){
+            // /profiledit clan|voie|style set|see|list joueur(si set ou see) id(si set)
+            sender.sendMessage("§6/profiledit §aclan§7|§bvoie§7|§cstyle §eset §7(joueur) (id) §8- Change le clan, style ou voie du joueur");
+            sender.sendMessage("§6/profiledit §aclan§7|§bvoie§7|§cstyle §elist §8- Liste les clans, les styles ou les voies (avec leurs id)");
+            sender.sendMessage("§6/profiledit §aclan§7|§bvoie§7|§cstyle §esee §7(joueur) §8- Informe sur le clan, voie ou style d'un joueur");
+            sender.sendMessage("§6/profiledit §aattribut set (joueur) §6(attribut) - §8L'attribut est un nom si le joueur est Inuzuka, si il est Sabaku : 1/2/3/4");
+            sender.sendMessage("§6/profiledit §aencre set (joueur) §6(nb) - §8Donne un montant des doses d'encre");
+        }
+    }
+
+    private void sendClanList(CommandSender sender){
+        sender.sendMessage(ChatColor.GRAY + "Liste des clans: ");
+        for(Clan clan : Clan.values()){
+            sender.sendMessage(ChatColor.GRAY + "- " + ChatColor.GOLD + clan.getName() + ChatColor.GRAY+ " (" + clan.getId() + ")");
+        }
+    }
+
+    private void sendVoieList(CommandSender sender){
+        sender.sendMessage(ChatColor.GRAY + "Liste des voies ninja : ");
+        for(VoieNinja voieNinja : VoieNinja.values()){
+            sender.sendMessage(ChatColor.GRAY + "- " + ChatColor.GOLD + voieNinja.getName() + ChatColor.GRAY+ " (" + voieNinja.getId() + ")");
+        }
+    }
+
+    private void sendStyleList(CommandSender sender){
+        sender.sendMessage(ChatColor.GRAY + "Liste des styles de combat : ");
+        for(StyleCombat styleCombat : StyleCombat.values()){
+            sender.sendMessage(ChatColor.GRAY + "- " + ChatColor.GOLD + styleCombat.getName() + ChatColor.GRAY+ " (" + styleCombat.getId() + ")");
+        }
+    }
+
+    private void sendList(String name, CommandSender sender) {
+        switch (name) {
+            case "clan":
+                sendClanList(sender);
+                break;
+            case "style":
+                sendStyleList(sender);
+                break;
+            case "voie":
+                sendVoieList(sender);
+                break;
+            default:
+                sendHelpList(sender);
+        }
+    }
+}

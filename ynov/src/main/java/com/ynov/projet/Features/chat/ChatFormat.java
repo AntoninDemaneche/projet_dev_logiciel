@@ -1,4 +1,4 @@
-package com.ynov.projet.Features.Chat;
+package com.ynov.projet.Features.chat;
 
 import com.ynov.projet.Features.utils.Channel;
 import com.ynov.projet.Features.PlayerData.PlayerConfig;
