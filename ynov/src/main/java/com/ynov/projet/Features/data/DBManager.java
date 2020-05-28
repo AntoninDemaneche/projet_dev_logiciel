@@ -47,7 +47,7 @@ public class DBManager {
 
             this.connection = DriverManager.getConnection(sqlhost, user, password);
         } catch (SQLException e) {
-            System.out.println("[SeisanPlugin] Une erreur de connection à la base de données est survenue.");
+            System.out.println("[Plugin] Une erreur de connection à la base de données est survenue.");
             Bukkit.getServer().shutdown();
             e.printStackTrace();
         }
@@ -72,7 +72,7 @@ public class DBManager {
     }
 
     public void refreshConnection(){
-        System.out.println("[Seisan_Plugin] Refresh de la connexion à la base de données.");
+        System.out.println("[Plugin] Refresh de la connexion à la base de données.");
         try {
             if (isConnected()) {
                 disconnect();

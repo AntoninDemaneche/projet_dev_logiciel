@@ -112,13 +112,13 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         dbManager.getPlayerDB().saveFichePerso();
-        LOG.info("--- Disabling Seisan Plugin  ---");
+        LOG.info("--- Disabling Plugin  ---");
         serverOpen = false;
         Channel.saveMJlist();
         Bukkit.getScheduler().cancelTasks(this);
 
 
-        LOG.info("--- Seisan plugin  disabled ---");
+        LOG.info("--- Plugin  disabled ---");
     }
 
     public void setupConfiguration()
@@ -167,7 +167,7 @@ public class Main extends JavaPlugin {
         new ProfilRegister().register();
         new OthersCommandRegister().register();
         new Routines().register();
-        System.out.println("---> Enabling SeisanPlugin <---");
+        System.out.println("---> Enabling Plugin <---");
         serverOpen = true;
         spigotLogger = Bukkit.getLogger();
 
@@ -185,7 +185,7 @@ public class Main extends JavaPlugin {
         setupManaLoop();
         dbManager.getPlayerDB().loadPlayerFiche();
 
-        spigotLogger.info("---> SeisanPlugin enabled <---");
+        spigotLogger.info("---> Plugin enabled <---");
     }
 
     public void notifyEnd()

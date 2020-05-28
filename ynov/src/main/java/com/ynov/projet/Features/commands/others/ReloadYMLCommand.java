@@ -13,9 +13,6 @@ import org.bukkit.command.CommandSender;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Helliot on 16/08/2018
- */
 public class ReloadYMLCommand extends Command {
     @Override
     public void myOnCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] split) {
