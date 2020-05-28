@@ -29,7 +29,6 @@ public class Commands extends Feature {
         new BootsCommand().register();
         new HatCommand().register();
         new WalkCommand().register();
-        new TestCommand().register();
         new BuildCommand().register();
         new LayCommand().register();
         new SitCommand().register();
