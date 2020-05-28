@@ -1,10 +1,10 @@
-package com.ynov.projet.features.chat;
+package com.ynov.projet.Features.Chat;
 
+import com.ynov.projet.Features.utils.Channel;
+import com.ynov.projet.Features.PlayerData.PlayerConfig;
+import com.ynov.projet.Features.PlayerData.PlayerInfo;
 import com.ynov.projet.Main;
-import com.ynov.projet.features.Feature;
-import com.ynov.projet.features.PlayerData.PlayerConfig;
-import com.ynov.projet.features.PlayerData.PlayerInfo;
-import com.ynov.projet.features.utils.Channel;
+import com.ynov.projet.Features.Feature;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -26,7 +26,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
-
 
 public class ChatFormat extends Feature
 {
@@ -90,9 +89,9 @@ public class ChatFormat extends Feature
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerChat(AsyncPlayerChatEvent event)
     {
-        if (event.getMessage().contains("%")) {
-            //      event.setMessage(event.getMessage().replace("%", ""));
-        }
+	    if (event.getMessage().contains("%")) {
+	  //      event.setMessage(event.getMessage().replace("%", ""));
+	    }
     }
 
     private void addRule(String prefix, String rule)
@@ -820,7 +819,7 @@ public class ChatFormat extends Feature
             if(commandOnClick!=null)
             {
                 textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
-                        commandOnClick.replace("%t", mutableMeta.getTarget())
+                                commandOnClick.replace("%t", mutableMeta.getTarget())
                                 .replace("%m", event.getMessage())
                                 .replace("%a", event.getPlayer().getName()))
                 );
@@ -925,7 +924,7 @@ public class ChatFormat extends Feature
                 }
             }
             if(meta.getRestriction()!=null) {
-                //  if ("mj".equals(meta.getRestriction()) && !Channel.isMJ(player))
+              //  if ("mj".equals(meta.getRestriction()) && !Channel.isMJ(player))
                 if ("mj".equals(meta.getRestriction()) && !player.isOp()) {
                     player.sendMessage(ChatColor.RED + meta.getDenialMessage());
                     return;
@@ -978,7 +977,7 @@ public class ChatFormat extends Feature
                         if(p!=event.getPlayer())
                         {
                             // if(("mj".equals(meta.getOnlyFor()) && !Channel.isMJ(p)))
-                            if(("mj".equals(meta.getOnlyFor()) && !p.isOp()))
+                             if(("mj".equals(meta.getOnlyFor()) && !p.isOp()))
                             {
                                 suitable = false;
                             }
@@ -1041,7 +1040,7 @@ public class ChatFormat extends Feature
         ItemStack item = p.getInventory().getItemInMainHand();
         if(item.getType() != Material.AIR) {
             if(item.getItemMeta() != null) {
-                name = item.getItemMeta().getDisplayName();
+                    name = item.getItemMeta().getDisplayName();
             }
         }
         else {
@@ -1052,3 +1051,17 @@ public class ChatFormat extends Feature
         return name;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,9 +1,9 @@
-package com.ynov.projet.features.data;
+package com.ynov.projet.Features.data;
 
+import com.ynov.projet.Features.PlayerData.PlayerConfig;
 import com.ynov.projet.Main;
-import com.ynov.projet.features.PlayerData.PlayerConfig;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
@@ -126,4 +126,3 @@ public class PlayerConfigDB {
         return null;
     }
 }
-

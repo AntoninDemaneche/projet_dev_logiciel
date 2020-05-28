@@ -1,8 +1,9 @@
-package com.ynov.projet.features.commands.anothers;
+package com.ynov.projet.Features.commands.anothers;
 
+import com.ynov.projet.Features.PlayerData.PlayerConfig;
+import com.ynov.projet.Features.utils.ItemUtil;
 import com.ynov.projet.Main;
-import com.ynov.projet.features.PlayerData.PlayerConfig;
-import com.ynov.projet.features.utils.ItemUtil;
+import com.ynov.projet.Main.Command;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -15,13 +16,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import static com.ynov.projet.features.commands.anothers.Commands.PlayerBuildTemp;
-import static com.ynov.projet.features.commands.anothers.Commands.perms;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuildCommand extends Main.Command {
+public class BuildCommand extends Command {
     @Override
 
     public void myOnCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] split) {
@@ -48,8 +46,8 @@ public class BuildCommand extends Main.Command {
                     break;
                 case "tempo":
                     /* On lui retire */
-                    if(PlayerBuildTemp.contains(target.getName())) {
-                        PlayerBuildTemp.remove(target.getName());
+                    if(Commands.PlayerBuildTemp.contains(target.getName())) {
+                        Commands.PlayerBuildTemp.remove(target.getName());
                         target.setGameMode(GameMode.SURVIVAL);
                         target.getInventory().clear();
                         target.sendMessage("§cHRP : §7Vous pouvez récupérer votre coffre en toute sécurité.");
@@ -58,7 +56,7 @@ public class BuildCommand extends Main.Command {
                     /* On lui remet */
                     else {
                         target.setPlayerListName("§7[Builder_TMP]"+target.getDisplayName());
-                        PlayerBuildTemp.add(target.getName());
+                        Commands.PlayerBuildTemp.add(target.getName());
                         target.setGameMode(GameMode.CREATIVE);
                         generateChest(target);
                         target.sendMessage("§4IMPORTANT : §7Ne prenez pas votre inventaire avant de ne plus avoir le build mode temporaire ! (ou déco reco)");
@@ -91,37 +89,37 @@ public class BuildCommand extends Main.Command {
         return completion;    }
 
     public static void newPermissionBuildMode(PlayerConfig pConfig) {
-        perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.me", false);
+        Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.me", false);
         // C'est là pour l'auto complete
         pConfig.getPlayer().updateCommands();
         if(!pConfig.getPlayer().isOp()) {
             if (pConfig.isBuildmode()) {
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("worldedit.*", true);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.gamemode", true);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.effect", true);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("multiverse.*", true);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("clickwarp.*", true);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.give", true);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.teleport", true);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.*", true);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.sniper", true);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.ignorelimitations", true);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.goto", true);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.brush.*", true);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("worldedit.*", true);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.gamemode", true);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.effect", true);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("multiverse.*", true);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("clickwarp.*", true);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.give", true);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.teleport", true);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.*", true);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.sniper", true);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.ignorelimitations", true);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.goto", true);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.brush.*", true);
 
             } else {
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("worldedit.*", false);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.gamemode", false);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.effect", false);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("multiverse.*", false);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("clickwarp.*", false);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.give", false);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.teleport", false);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.*", false);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.sniper", false);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.ignorelimitations", false);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.goto", false);
-                perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.brush.*", false);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("worldedit.*", false);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.gamemode", false);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.effect", false);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("multiverse.*", false);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("clickwarp.*", false);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.give", false);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("minecraft.command.teleport", false);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.*", false);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.sniper", false);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.ignorelimitations", false);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.goto", false);
+                Commands.perms.get(pConfig.getPlayer().getUniqueId()).setPermission("voxelsniper.brush.*", false);
             }
         }
         // C'est là pour l'auto complete

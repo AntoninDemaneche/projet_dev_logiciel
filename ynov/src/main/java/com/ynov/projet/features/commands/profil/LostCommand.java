@@ -1,27 +1,36 @@
-package com.ynov.projet.features.commands.profil;
+package com.ynov.projet.Features.commands.profil;
 
-import com.ynov.projet.Main;
-import com.ynov.projet.features.PlayerData.PlayerInfo;
+import com.ynov.projet.Features.PlayerData.PlayerInfo;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
 import com.ynov.projet.Main.Command;
+
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LostCommand extends Command {
-
     @Override
     public void myOnCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] split) {
-        if (split.length == 1){
+        if (split.length == 1) {
             Player target = (Player) sender;
             PlayerInfo targetInfo = PlayerInfo.getPlayerInfo(target);
             if (StringUtils.isNumeric(split[0])){
-                int amout = Integer.parseInt(split[0]);
-                targetInfo.removeMana(amout);
-                sender.sendMessage(ChatColor.BLUE + "Tu perds " + ChatColor.RED + amout + ChatColor.BLUE + " de mana !");
+                int amount = Integer.parseInt(split[0]);
+                targetInfo.removeMana(amount);
+                sender.sendMessage(ChatColor.BLUE + "Tu perds " + ChatColor.RED + amount + ChatColor.BLUE + " de chakra !");
+
+                String message = ChatColor.BLUE + "** " + ((Player) sender).getDisplayName() + ChatColor.BLUE + " perd " + ChatColor.GOLD + amount + ChatColor.BLUE + " de chakra ! **";
+
+                target.sendMessage(message);
+                for(Entity e : target.getNearbyEntities(25, 25, 25)){
+                    if(e instanceof Player){
+                        e.sendMessage(message);
+                    }
+                }
             }else {
                 sender.sendMessage(ChatColor.RED + "La commande c'est /lost <quantité> !");
             }
@@ -29,7 +38,10 @@ public class LostCommand extends Command {
     }
 
     @Override
-    protected List<String> myOnTabComplete(CommandSender sender, org.bukkit.command.Command command, String label, String[] split) {
+    protected List<String> myOnTabComplete(CommandSender sender, org.bukkit.command.Command command, String label, String[] split)
+    {
         return new ArrayList<>();
     }
+
+
 }

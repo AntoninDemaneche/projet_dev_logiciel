@@ -1,10 +1,12 @@
-package com.ynov.projet.features.listener;
-
-import com.ynov.projet.features.Feature;
-import org.bukkit.Location;
+package com.ynov.projet.Features.listener;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.ynov.projet.Features.Feature;
+import com.ynov.projet.Features.skill.SkillManager;
+import org.bukkit.Location;
+
 
 public class Listener extends Feature {
     private static final HashMap<String, String> TABLE = new HashMap<String, String>();
@@ -43,23 +45,32 @@ public class Listener extends Feature {
         TABLE.put("yellow", "e");
         TABLE.put("white", "f");
         TABLE.put("clear", "f");
+
     }
 
-    public static String getColor(String raw){
+    public static String getColor(String raw) {
         return TABLE.get(raw);
     }
     public static Map<String, Integer> antimaccro;
     public static Map<String, Location> loccasino;
-
     @Override
-    protected void doRegister(){
+    protected void doRegister() {
+        new AppearenceListener().register();
+        new CloneListener().register();
         new DataListener().register();
-        new PlayerJoin().register();
-        new PlayerRightClick().register();
-        new ProfilInventoryListener().register();
-
+        new MiscListener().register();
+        new SitListener().register();
+        new SkillManager().register();
+        new LayListener().register();
+        new LockListener().register();
+        new OpListener().register();
+        new PNJListener().register();
+        new SkillInventoryListener().register();
+        new TrainInventoryListener().register();
+        new TrainListener().register();
+        //  TODO : A corriger, désolé Kujaku
+       // new LoadSchematicListener().register();
         antimaccro = new HashMap<>();
         loccasino = new HashMap<>();
     }
-
 }

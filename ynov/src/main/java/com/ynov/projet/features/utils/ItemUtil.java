@@ -1,6 +1,7 @@
-package com.ynov.projet.features.utils;
+package com.ynov.projet.Features.utils;
 
 import net.minecraft.server.v1_15_R1.NBTTagCompound;
+
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
@@ -10,7 +11,10 @@ import org.bukkit.material.Wool;
 
 import java.util.List;
 
+
+
 public class ItemUtil {
+
     public static ItemStack createItemStack(Material type, int amount){
         return new ItemStack(type, amount);
     }
@@ -18,7 +22,7 @@ public class ItemUtil {
     public static ItemStack createItemStack(Material type, int amount, String name){
         ItemStack item = new ItemStack(type);
         ItemMeta meta = item.getItemMeta();
-        if(meta != null) {
+        if (meta != null){
             meta.setDisplayName(name);
             item.setItemMeta(meta);
         }
@@ -29,7 +33,7 @@ public class ItemUtil {
     public static ItemStack createItemStack(Material type, int amount, String name, List<String> lore){
         ItemStack item = new ItemStack(type, amount);
         ItemMeta meta = item.getItemMeta();
-        if(meta != null) {
+        if (meta != null){
             meta.setDisplayName(name);
             meta.setLore(lore);
             item.setItemMeta(meta);
@@ -41,7 +45,7 @@ public class ItemUtil {
     public static ItemStack createItemStack(Material type, int amount, String name, List<String> lore, String keytag, String valuetag){
         ItemStack item = new ItemStack(type, amount);
         ItemMeta meta = item.getItemMeta();
-        if(meta != null) {
+        if (meta != null){
             meta.setDisplayName(name);
             meta.setLore(lore);
             item.setItemMeta(meta);
@@ -52,17 +56,6 @@ public class ItemUtil {
         tag.setString(keytag, valuetag);
         stack.setTag(tag);
         item = CraftItemStack.asBukkitCopy(stack);
-        return item;
-    }
-
-    public static ItemStack createRenamedWool(DyeColor color, int amount, String name){
-        Wool wool = new Wool(color);
-        ItemStack item = wool.toItemStack(amount);
-
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(name);
-        item.setItemMeta(meta);
-
         return item;
     }
 
@@ -82,6 +75,17 @@ public class ItemUtil {
             test = true;
         }
         return test;
+    }
+
+    public static ItemStack createRenamedWool(DyeColor color, int amount, String name){
+        Wool wool = new Wool(color);
+        ItemStack item = wool.toItemStack(amount);
+
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        item.setItemMeta(meta);
+
+        return item;
     }
 
     public static String convertItemStackToJsonRegular(ItemStack itemStack) {

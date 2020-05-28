@@ -1,8 +1,8 @@
-package com.ynov.projet.features.commands.anothers;
+package com.ynov.projet.Features.commands.anothers;
 
+import com.ynov.projet.Features.Feature;
+import com.ynov.projet.Features.PlayerData.PlayerConfig;
 import com.ynov.projet.Main;
-import com.ynov.projet.features.Feature;
-import com.ynov.projet.features.PlayerData.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.potion.PotionEffect;
@@ -15,17 +15,49 @@ import java.util.UUID;
 
 public class Commands extends Feature {
     public static ArrayList<String> param = new ArrayList<>();
+    public static ArrayList<String> phraseantonin = new ArrayList<>();
     public static HashMap<UUID, PermissionAttachment> perms = new HashMap<>();
     public static ArrayList<String> PlayerBuildTemp = new ArrayList<>();
     public static Random random;
 
     @Override
-    protected void doRegister(){
+    protected void doRegister() {
+        new ChatMasterCommand().register();
+        new RollCommand().register();
+        new RollResistanceCommand().register();
         random = new Random(System.nanoTime());
+        new BootsCommand().register();
+        new HatCommand().register();
+        new WalkCommand().register();
+        new TestCommand().register();
         new BuildCommand().register();
+        new LayCommand().register();
+        new SitCommand().register();
+        new ChangeChatDeSeisanCommand().register();
+        new GmCommand().register();
+        new PNJCommand().register();
+        new LoreCommand().register();
+        new RenameItemCommand().register();
+        new ValiderItemCommand().register();
+        new AntoninCommand().register();
+        new TpWorldCommand().register();
+        new CanishCommand().register();
 
         param.add("add");
         param.add("remove");
+
+        phraseantonin.add("Y'a des bon moments pour dire des truc et sa s'en est 1, t'es trop bg");
+        phraseantonin.add("Tu veux le Yinyanton? Ok bah rdv le 30/02 mon pote");
+        phraseantonin.add("T'es vraiment cool, tu peux tout faire dans la vie.");
+        phraseantonin.add("T'es trop un roleplayer d'élite");
+        phraseantonin.add("Merci pour tout ce que tu fais pour le serveur");
+        phraseantonin.add("T'es trop beau et c'est pas un avis porter sur la rage ?");
+    }
+
+
+    // Commande qui permet de générer un nombre aléatoire
+    static int getRandom(String name, int lower, int upper) {
+        return (random.nextInt((upper - lower) + 1) + lower);
     }
 
     public static void playerVanish(PlayerConfig pConfig) {

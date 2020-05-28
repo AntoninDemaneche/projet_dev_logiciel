@@ -1,27 +1,31 @@
-package com.ynov.projet.features.listener;
+package com.ynov.projet.Features.listener;
 
+import com.ynov.projet.Features.Feature;
+import com.ynov.projet.Features.PlayerData.PlayerClone;
+import com.ynov.projet.Features.PlayerData.PlayerConfig;
+import com.ynov.projet.Features.PlayerData.PlayerInfo;
+import com.ynov.projet.Features.commands.anothers.BuildCommand;
+import com.ynov.projet.Features.commands.anothers.Commands;
+import com.ynov.projet.Features.data.DBManager;
+import com.ynov.projet.Features.data.PlayerDB;
 import com.ynov.projet.Main;
-import com.ynov.projet.features.PlayerData.PlayerConfig;
-import com.ynov.projet.features.commands.anothers.BuildCommand;
-import com.ynov.projet.features.commands.anothers.Commands;
-import com.ynov.projet.features.data.DBManager;
-import com.ynov.projet.features.Feature;
-import com.ynov.projet.features.data.PlayerDB;
-import com.ynov.projet.features.PlayerData.PlayerInfo;
+import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.permissions.PermissionAttachment;
 
-import static org.bukkit.Bukkit.getServer;
+import static com.ynov.projet.Features.commands.anothers.Commands.PlayerBuildTemp;
 import static com.ynov.projet.Main.dbManager;
 import static com.ynov.projet.Main.serverOpen;
-import static com.ynov.projet.features.commands.anothers.Commands.PlayerBuildTemp;
-import static com.ynov.projet.features.commands.anothers.Commands.perms;
+import static com.ynov.projet.Features.commands.anothers.Commands.perms;
+import static org.bukkit.Bukkit.getServer;
+
 
 public class DataListener extends Feature {
 
@@ -103,10 +107,34 @@ public class DataListener extends Feature {
 
             PlayerInfo pInfo = PlayerInfo.getPlayerInfo(e.getPlayer());
 
+            if(pInfo.getPlayerClone() != null)
+                pInfo.getPlayerClone().destroyAllClones();
+
+            PlayerClone.getCloneTicket().remove(e.getPlayer());
 
             DBManager dbManager = Main.dbManager;
             PlayerDB playerDB = dbManager.getPlayerDB();
 
+            if(Main.getIDninkenFromNamePlayer().containsKey(e.getPlayer().getName())) {
+                Entity entity = getServer().getEntity(Main.getIDninkenFromNamePlayer().get(e.getPlayer().getName()));
+                if(entity != null) {
+                    entity.remove();
+                }
+                Main.getIDninkenFromNamePlayer().remove(e.getPlayer().getName());
+            }
+
+            if(Main.getIsSwitch().containsKey(e.getPlayer().getName())) {
+                NPC npc = Main.getIsSwitch().get(e.getPlayer().getName());
+                if(npc != null) {
+                    npc.destroy();
+                }
+                Main.getIsSwitch().remove(e.getPlayer().getName());
+            }
+
+            if(Main.getCurrentSelectSkill().containsKey(e.getPlayer().getName())) {
+                Bukkit.getScheduler().cancelTask(Main.getCurrentSelectSkill().get(e.getPlayer().getName()));
+                Main.getCurrentSelectSkill().remove(e.getPlayer().getName());
+            }
 
             playerDB.updatePlayer(pInfo);
 

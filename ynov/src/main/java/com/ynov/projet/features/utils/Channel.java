@@ -1,13 +1,14 @@
-package com.ynov.projet.features.utils;
+package com.ynov.projet.Features.utils;
 
-import com.ynov.projet.features.Feature;
-import com.ynov.projet.features.data.Config;
-import net.md_5.bungee.api.ChatColor;
+import com.ynov.projet.Features.Feature;
+import com.ynov.projet.Features.data.Config;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.UUID;
+
 
 public class Channel extends Feature {
 
@@ -59,4 +60,3 @@ public class Channel extends Feature {
     }
 
 }
-

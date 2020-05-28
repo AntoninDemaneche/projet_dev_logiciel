@@ -1,12 +1,13 @@
-package com.ynov.projet.features.data;
+package com.ynov.projet.Features.data;
 
-import com.ynov.projet.Main;
 import lombok.Getter;
+import com.ynov.projet.Main;
 import org.bukkit.Bukkit;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 
 public class DBManager {
 
@@ -46,7 +47,7 @@ public class DBManager {
 
             this.connection = DriverManager.getConnection(sqlhost, user, password);
         } catch (SQLException e) {
-            System.out.println("[Plugin] Une erreur de connection à la base de données est survenue.");
+            System.out.println("[SeisanPlugin] Une erreur de connection à la base de données est survenue.");
             Bukkit.getServer().shutdown();
             e.printStackTrace();
         }
@@ -71,7 +72,7 @@ public class DBManager {
     }
 
     public void refreshConnection(){
-        System.out.println("[Plugin] Refresh de la connexion à la base de données.");
+        System.out.println("[Seisan_Plugin] Refresh de la connexion à la base de données.");
         try {
             if (isConnected()) {
                 disconnect();

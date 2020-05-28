@@ -1,4 +1,4 @@
-package com.ynov.projet.features.PlayerData;
+package com.ynov.projet.Features.PlayerData;
 
 import lombok.Getter;
 import lombok.Setter;

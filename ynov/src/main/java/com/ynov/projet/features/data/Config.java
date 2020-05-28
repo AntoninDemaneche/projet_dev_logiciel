@@ -1,4 +1,4 @@
-package com.ynov.projet.features.data;
+package com.ynov.projet.Features.data;
 
 import com.ynov.projet.Main;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -151,4 +151,3 @@ public class Config {
         }
     }
 }
-

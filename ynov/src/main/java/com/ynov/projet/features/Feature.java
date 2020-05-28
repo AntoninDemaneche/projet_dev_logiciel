@@ -1,45 +1,52 @@
-package com.ynov.projet.features;
+package com.ynov.projet.Features;
 
 import com.ynov.projet.Main;
+import java.util.logging.Level;
 import org.bukkit.event.Listener;
 
-import java.util.logging.Level;
-
-public class Feature implements Listener {
-
+public class Feature implements Listener
+{
     protected final String featureName;
     protected final String path;
-    public Feature(){
+    public Feature()
+    {
         featureName = getClass().getSimpleName();
         path = Main.initConfigFor(featureName);
-
     }
 
-    public void register(){
-        if (Main.isActivated(path)){
+    public void register()
+    {
+        if(Main.isActivated(path))
+        {
             Main.log(Level.INFO, "Enabled feature " + featureName);
-            Main.plugin().getServer().getPluginManager().registerEvents(this, Main.plugin());
+            Main.plugin().getServer().getPluginManager().registerEvents(this,Main.plugin());
             doRegister();
-        }else {
+        }
+        else
+        {
             Main.log(Level.INFO, "Tried to enable feature " + featureName + " but it was disabled in the config.");
         }
         Main.exitConfigFor();
     }
 
-    protected void doRegister(){
+    protected void doRegister()
+    {
 
     }
 
-    public void ignore() {
+    public void ignore()
+    {
         Main.log(Level.INFO, "Feature " + featureName + " was ignored.");
         Main.exitConfigFor();
     }
 
-    protected void addConfig(String s, Object value) {
+    protected void addConfig(String s, Object value)
+    {
         Main.addConfig(s, value, path);
     }
 
-    protected Object getConfig(String s) {
+    protected Object getConfig(String s)
+    {
         return Main.getConfig(s, path);
     }
 }
